@@ -1,4 +1,4 @@
-class Solution {
+class RichestCustomer {
     public int maximumWealth(int[][] accounts) {
         int winnerWinner = 0;
         int currentPerson = 0;

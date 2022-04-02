@@ -1,4 +1,4 @@
-class Solution {
+class StepsToZero {
     public int numberOfSteps(int num) {
         int steps = 0;
         while (num != 0) {
