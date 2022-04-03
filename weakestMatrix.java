@@ -1,30 +1,29 @@
-import java.util.LinkedList;
+import java.util.PriorityQueue;
 
 class Solution {
-
     public int[] kWeakestRows(int[][] mat, int k) {
-        int numSoldiers = 0;
-        int index = 0;
-        LinkedList <Integer> LL= new LinkedList<>();
-
-        for (int[] army : mat) {
-            for (int soldier : army) {
-                numSoldiers += soldier;
-            }
-            if (LL.size() > 0 && numSoldiers >= LL.peek()) {
-                //Add to front of list
-                LL.addFirst(index);
-            } else {
-                LL.push(index);
-            }//Else 
-            index++;
-        }
-        int[] array = new int [k];
-
-        for (int i = 0; i < k; i ++) {
-            array[i] = LL.pop();
-        }//create array of ints
+        //Create Comparator with Lambda expression that compares a int[2] array defined as such [armySize,index]
+        //If army sizes are diferent it will order by army size, else it will order by index
+        PriorityQueue<int[]> q = new PriorityQueue<>((a, b) -> a[0] != b[0] ? a[0] - b[0] : a[1] - b[1]);
         
-        return array;
+        //Loop through and values
+        for (int index = 0; index < mat.length; index++){
+            int lo = 0, hi = mat[index].length; 
+            
+            //Binary search
+            while(lo < hi){
+                int mid = (lo + hi) / 2;
+                if (mat[index][mid] != 0) lo = mid + 1;
+                else hi = mid;
+            }
+            
+            //[armySize,index]
+            q.add(new int[]{lo, index});
+        }
+        
+        //Now create outpute array of size k
+        int[] output = new int[k];
+        for(int i = 0; i < k; i++)  output[i] = q.remove()[1];
+        return output;
     }
 }
