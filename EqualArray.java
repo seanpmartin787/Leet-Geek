@@ -1,4 +1,4 @@
-class Solution {
+class EqualArray {
     public boolean arrayStringsAreEqual(String[] word1, String[] word2) {
         boolean match = true;
         int otherI = 0;

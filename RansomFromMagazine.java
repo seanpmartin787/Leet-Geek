@@ -1,7 +1,7 @@
 import java.util.HashMap;
 import java.util.Map;
 
-class Solution {
+class Ransom {
     public static void main(String[] args) {
         System.out.println("Testing");   
     }

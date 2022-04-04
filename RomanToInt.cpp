@@ -1,4 +1,4 @@
-class Solution {
+class RomanToInt {
     public:
         int romanToInt(string s) {
             int sum = 0;
