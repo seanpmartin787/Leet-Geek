@@ -2,7 +2,7 @@ import java.util.PriorityQueue;
 
 class WeakestMatrix {
 
-    public static void main() {
+    public static void main(String[] args) {
         System.out.println("Testing my WeakestMatrix class");
     }
     public int[] kWeakestRows(int[][] mat, int k) {
