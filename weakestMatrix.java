@@ -1,6 +1,10 @@
 import java.util.PriorityQueue;
 
 class WeakestMatrix {
+
+    public static void main(String[] args) {
+        System.out.println("Testing my WeakestMatrix class");
+    }
     public int[] kWeakestRows(int[][] mat, int k) {
         //Create Comparator with Lambda expression that compares a int[2] array defined as such [armySize,index]
         //If army sizes are diferent it will order by army size, else it will order by index
