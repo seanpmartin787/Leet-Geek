@@ -23,6 +23,7 @@ public class TargetSum {
                     numMap.put(nums[i], i);
                 }
 
+                //if you have gotten here you are SOL
                 return null;
             }//else it is not so easy
         }
