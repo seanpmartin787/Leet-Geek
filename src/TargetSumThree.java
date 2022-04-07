@@ -18,7 +18,7 @@ public class TargetSumThree {
                     Integer kValue = (Integer) (target - nums[j]);
                     if (numMap.containsKey(kValue)) {
                         int k = numMap.get(kValue);
-                        if (i != j && i != k && j != k) {
+                        if (i != k && j != k) {
                             foundTriples.add(Arrays.asList(nums[i], nums[j], kValue));
                             numMap.remove(nums[j]);
                         }//If conditions met
