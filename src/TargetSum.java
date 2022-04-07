@@ -11,9 +11,7 @@ public class TargetSum {
             } else {
                 
                 HashMap<Integer,Integer> numMap= new HashMap<>();
-                boolean found = false;
-                int first = 0;
-                int second = 0;
+
 
                 for (int i =0; i < nums.length; i++ ) {
                     Integer difference = (Integer)(target - nums[i]);
