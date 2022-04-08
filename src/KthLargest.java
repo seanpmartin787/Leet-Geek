@@ -1,29 +1,102 @@
 class KthLargest {
+    //Initialize this in the constructor so that add function can access it
+    int kthLargest;
+    int[] sortedNums;
 
     public static void main(String[] args) {
-        int arr[] = { 12, 11, 13, 5, 6, 7 };
+        int arr[] = {};
 
-        Sort(arr, 0, (arr.length -1));
+//        Sort(arr, 0, (arr.length -1));
+//
+//
 
-        for (int value : arr) {
+        KthLargest ob = new KthLargest(1, arr);
+
+        for (int value : ob.sortedNums) {
             System.out.println(value);
         }
-    }
+
+        ob.add(3);
+        ob.add(5);
+        ob.add(10);
+        ob.add(9);
+        ob.add(4);
+
+        for (int value : ob.sortedNums) {
+            System.out.println(value);
+        }
+
+    }//End main
+
+
 
     public KthLargest(int k, int[] nums) {
 
         //Implement merge sort to achieve
         //O(NLog(N)) time complexity
         //and O(N) space complexity
+        Sort(nums, 0, (nums.length -1));
+        this.sortedNums = nums;
+        this.kthLargest = k;
+
+        //now that it is sorted we can expect the add function to get called
+        //Nothing left to do in the constructor
+
 
     }
 
     public int add(int val) {
-        //Implement this with a binary search so that we can insert into list size (n)
+        //Implement this with a binary search so that we can find value in list size (n)
         // with time complexity of O(Log(N))
 
-        return 0;
+        if (sortedNums.length > 0) {
+            int l = 0, h = (sortedNums.length - 1), m = 0;
+
+            while (l <= h) {
+                m = l + (h - l) / 2;
+
+                if (sortedNums[m] == val) {
+                    //put(m+1, val);
+                    //If there is a match break the loop and put the value at m + 1
+                    break;
+                } else if (val < sortedNums[m]) {
+                    //Search bottom half
+                    h = m - 1;
+                } else {
+                    //search top half
+                    l = m + 1;
+                }
+            }//While searching
+
+            if (sortedNums[m] == val || sortedNums[m] <= val) {
+                m = m + 1;
+            }
+
+            put(m, val);
+
+        } else {
+            sortedNums = new int[] {val};
+        }
+        return sortedNums[sortedNums.length - kthLargest];
     }
+    public void put(int index, int value) {
+
+        int[] newArr = new int[(sortedNums.length + 1)];
+        int j = 0;
+
+        for (int i = 0; i < newArr.length; i++) {
+
+            if (i == index) {
+                newArr[i] = value;
+            } else {
+                newArr[i] = sortedNums[j];
+                j++;
+            }
+        }//place each value, shifting over when we are at our new index
+
+        this.sortedNums = newArr;
+
+    }//Abstract put method
 
     public static void Sort(int arr[], int l, int r) {
 
