@@ -61,7 +61,7 @@ class KthLargest {
         }
 
         //indexes
-        int i = 0, j = 0, k = 1; // i is left sub array, j is right, k is merged array
+        int i = 0, j = 0, k = l; // i is left sub array, j is right, k is merged array
 
         while (i < size1 && j < size2) {
             if (lower[i] <= upper[j]) {
@@ -83,7 +83,7 @@ class KthLargest {
         }
 
         while (j < size2) {
-            arr[k] = lower[j];
+            arr[k] = upper[j];
             j++;
             k++;
         }
