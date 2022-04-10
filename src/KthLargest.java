@@ -1,3 +1,5 @@
+import javax.swing.*;
+import java.util.List;
 import java.util.PriorityQueue;
 
 class KthLargest {
@@ -83,6 +85,8 @@ class KthLargest {
     }
     public void put(int index, int value) {
 
+
+
         int[] newArr = new int[(sortedNums.length + 1)];
         int j = 0;
 
@@ -150,7 +154,7 @@ class KthLargest {
         }
 
         //Copy any remaining elements b/c loop ends when shorter arr hits limit
-        //we can append to the end because the sub array should be sort so the last one is largest
+        //we can append to the end because the sub array should be sorted so the last one is largest
         while (i < size1) {
             arr[k] = lower[i];
             i++;
