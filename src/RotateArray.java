@@ -2,53 +2,25 @@ public class RotateArray {
     class Solution {
         public void rotate(int[] nums, int k) {
 
-            if (!(nums.length == k)) {
+        //We can do this by reversing the whole array, then reversing sub array 0 - (k-1)
+            // and reversing other sub array k - (nums.length - 1)
+            k %= nums.length;
+            reverse(0, nums.length - 1, nums);
+            reverse(0, k - 1, nums);
+            reverse(k, nums.length - 1, nums);
 
-                startSwap(0, k, nums, 0);
+        }
 
-                if (nums.length % k == 0) {
-                    //if k creates a cycle we need to call swap on the other track
-                    startSwap(1, k, nums, 1);
-                }
-                //0, 1, 2, 3, 4, 5]
-
+        private void reverse (int startIndex, int lastIndex, int[] arr) {
+            while (startIndex < lastIndex) {
+                int temp = arr[startIndex];
+                arr[startIndex] = arr[lastIndex];
+                arr[lastIndex] = temp;
+                startIndex++;
+                lastIndex--;
             }
 
-        }
-        public void startSwap(int currentIndex, int distance, int[] nums, int startingPoint) {
+        }//reverse all the values
 
-            //performs the first swap outside the stop condition
-            int sourceVal = 0, destinationVal = 0, destinationIndex = 0;
-            sourceVal = nums[currentIndex];
-            destinationIndex = newIndex(currentIndex, distance, nums.length - 1);
-            destinationVal = nums[destinationIndex];
-            nums[destinationIndex] = sourceVal;
-
-            performSwap(destinationIndex, destinationVal, nums, startingPoint);
-        }
-
-        public void performSwap(int currentIndex, int distance, int[] nums, int startingPoint) {
-
-            if (currentIndex != startingPoint) {
-                int sourceVal = 0, destinationVal = 0, destinationIndex = 0;
-                sourceVal = nums[currentIndex];
-                destinationIndex = newIndex(currentIndex, distance, nums.length - 1);
-                destinationVal = nums[destinationIndex];
-                nums[destinationIndex] = sourceVal;
-
-                performSwap(destinationIndex, destinationVal, nums, startingPoint);
-            }//break recursive chain
-
-        }
-
-        public int newIndex(int currentIndex, int distance, int lastIndex) {
-            if (currentIndex + distance <= lastIndex) {
-                return  currentIndex + distance;
-            } else {
-                //Modulus lets us have k > size of array
-                currentIndex = ((distance - (lastIndex - currentIndex)) - 1) % (lastIndex + 1);
-                return currentIndex;
-            }
-        }
     }
 }
