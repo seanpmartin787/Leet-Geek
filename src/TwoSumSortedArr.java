@@ -5,17 +5,15 @@ public class TwoSumSortedArr {
         if (nums.length == 2) {
             return new int[] {1,2};
         } else {
-            HashMap<Integer,Integer> numMap= new HashMap<>();
+            int low = 0, high = nums.length - 1;
 
-            for (int i = 0; i < nums.length; i++ ) {
-                Integer difference = target - nums[i];
-                if (numMap.containsKey(difference)) {
-                    return new int[] {numMap.get(difference) + 1, i + 1 };
-                }
-                numMap.put(nums[i], i);
+            while (low < high) {
+                int sum = nums[low] + nums[high];
+                if (sum == target) break;
+                else if (sum < target) low++;
+                else high--;
             }
-            //if you have gotten here you are SOL
-            return null;
+            return new int[] {low+1,high+1};
         }//else it is not so easy
     }
 }
