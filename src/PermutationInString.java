@@ -32,29 +32,16 @@ public class PermutationInString {
         }
 
         while (i < s2.length() && !found) {
-            int letterCount = 0;
+            int letterCount = s1.length();
             j = i++;
-            map2.clear();
 
-            while (j < s2.length() && letterCount < s1.length() && map1.containsKey(s2.charAt(j))) {
-                letterCount++;
+            while (j < s2.length() && (j-i) < s1.length()) {
                 char currentChar = s2.charAt(j++);
-                MutableInt count = map2.get(currentChar);
-                if (count == null) {
-                    map2.put(currentChar, new MutableInt());
-                } else {
-                        count.increment();
-                    }
-            }
-            int matchLetter = 0;
-            for (char key: map1.keySet()) {
-                if (!(map2.containsKey(key)) || map1.get(key).get() > map2.get(key).get()) {
-                    break;
-                }
-                matchLetter++;
-            }
-            if (matchLetter == map1.size()) found = true;
+                if (!map1.containsKey(currentChar)) break;
 
+                letterCount++;
+            }
+            if (letterCount == s1.length()) found = true;
         }
 
         return found;
