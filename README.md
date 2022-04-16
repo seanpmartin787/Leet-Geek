@@ -11,3 +11,5 @@ LeetCode Solutions
 - Data Streams
 - Linked Lists
 - Matrices
+- DFS
+- BFS
