@@ -1,4 +1,12 @@
 public class TreeRightPointer {
+    public static void main(String[] args) {
+        int one = 5;
+        long three = 5;
+
+        System.out.println(~one);
+        System.out.println(~three);
+
+    }
     class Node {
         public int val;
         public Node left;
