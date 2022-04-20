@@ -13,21 +13,20 @@ public class Permutations {
 
     private static void permute(List<List<Integer>> perms, int[] nums, List<Integer> permutation, HashSet<Integer> permSet) {
         if (permutation.size() == nums.length) {
-            //Have to create new array list or it will just get overwritten
+            //Have to create new array list, or it will just get overwritten
             perms.add(new ArrayList<>(permutation));
-            return;
         } else {
-            for (int i = 0; i < nums.length; i++) {
-                if (permSet.contains(i)) continue;
+            for (int num : nums) {
+                if (permSet.contains(num)) continue;
 
-                permutation.add(nums[i]);
-                permSet.add(nums[i]);
+                permutation.add(num);
+                permSet.add(num);
 
                 permute(perms, nums, permutation, permSet);
 
                 //Remove the most recent entry
                 permSet.remove(permutation.get(permutation.size() - 1));
-                permutation.remove(permutation.size()-1);
+                permutation.remove(permutation.size() - 1);
 
             }
         }
