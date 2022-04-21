@@ -8,13 +8,16 @@ public class RobHouseDP {
         if (nums == null) return 0;
         if (nums.length == 1) return nums[0];
 
-        int[] memo = new int[nums.length + 1];
-        memo[0] = 0;
-        memo[1] = nums[0];
+        int prev2 = 0;
+        int prev1 = nums[0];
+        int current = nums[1];
 
-         for (int i = 1; i < nums.length; i++) {
-            memo[i + 1] = Math.max(memo[i-1] + nums[i], memo[i]);
+        for (int i = 1; i < nums.length; i++) {
+            current = nums[i];
+            current = Math.max(prev2 + current, prev1);
+            prev2 = prev1;
+            prev1 = current;
         }
-        return memo[nums.length];
+        return current;
     }
 }
