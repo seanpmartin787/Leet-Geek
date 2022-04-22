@@ -2,7 +2,7 @@ public class ReverseBits {
     public static void main(String[] args) {
         reverseBits(43261596);
     }
-    public int reverseBits(int n) {
+    public static int reverseBits(int n) {
         if (n == 0) return 0;
 
         int flip = 0;
