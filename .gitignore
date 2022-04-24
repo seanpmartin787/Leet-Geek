@@ -1,3 +1,9 @@
+#Project settings
+.idea/*
+.vscode/*
+out/*
+*
+
 #CPP executables
 *Leet-Geek/out/production/Leet-Geek/*.cpp
 
