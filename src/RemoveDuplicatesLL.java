@@ -1,9 +1,10 @@
 public class RemoveDuplicatesLL {
     public ListNode deleteDuplicates(ListNode head) {
         if (head == null || head.next == null) return head;
-        ListNode slow = head, fast = head;
+        ListNode slow = new ListNode(Integer.MIN_VALUE, head);
+        ListNode fast = head;
 
-        while (fast != null && fast.next != null) {
+        while (slow.next != null && slow.next.next != null) {
             fast = slow.next;
 
             if (slow.next.val != fast.next.val) {
@@ -14,14 +15,10 @@ public class RemoveDuplicatesLL {
                 while (fast != null && slow.next.val == fast.val) {
                     fast = fast.next;
                 }
-                if ((slow == head || slow.next == head ) && fast != null) {
-                    head = fast; //if slow is the first node
-                    slow.next = head;
-                } else if (fast == null && slow.next == head) {
-                    return null;
-                } else {
-                    slow.next = fast; //remove them from the list
+                if (slow.next == head) {
+                    head = fast;
                 }
+                slow.next = fast;
             }
         }
         return head;
