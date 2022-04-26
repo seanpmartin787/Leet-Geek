@@ -8,14 +8,14 @@ public class Combinations {
         combine(7,3);
     }
     public static List<List<Integer>> combine(int n, int k) {
-        List<List<Integer>> combs = new ArrayList<List<Integer>>();
+        List<List<Integer>> combs = new ArrayList<>();
         //C(n,k) = n!/k!(n-k)!
-        combine(combs, new ArrayList<Integer>(), 1, n, k);
+        combine(combs, new ArrayList<>(), 1, n, k);
         return combs;
     }
     public static void combine(List<List<Integer>> combs, List<Integer> comb, int start, int n, int k) {
         if(k==0) {
-            combs.add(new ArrayList<Integer>(comb));
+            combs.add(new ArrayList<>(comb));
             return;
         }
         for(int i=start;i<=n-k+1;i++) {
