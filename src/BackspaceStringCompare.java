@@ -1,8 +1,7 @@
 public class BackspaceStringCompare {
     public static void main(String[] args) {
-        String one = "####";
-
-        String two = "a###";
+        String one = "ab#c";
+        String two = "ad#c";
 
         System.out.println(backspaceCompare(one,two));
     }
@@ -21,11 +20,11 @@ public class BackspaceStringCompare {
         char leftCh = i < 0 ? '#' : S.charAt(i);
 
         while (j >= 0 && (countT > 0 || T.charAt(j) == '#')) {
-            if (S.charAt(j) == '#') countS++;
-            else countS--;
+            if (T.charAt(j) == '#') countT++;
+            else countT--;
             j--;
         }
-        char rightCh = j < 0 ? '#' : S.charAt(j);
+        char rightCh = j < 0 ? '#' : T.charAt(j);
 
         if (leftCh != rightCh) return false;
 
