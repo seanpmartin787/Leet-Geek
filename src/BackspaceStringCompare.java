@@ -1,44 +1,37 @@
 public class BackspaceStringCompare {
     public static void main(String[] args) {
-        String one = "ab##";
+        String one = "####";
 
-        String two = "c#d#";
+        String two = "a###";
 
         System.out.println(backspaceCompare(one,two));
-
-
     }
-    public static boolean backspaceCompare(String s, String t) {
-        StringBuilder sb = new StringBuilder(s);
-        StringBuilder tb = new StringBuilder(t);
+    public static boolean backspaceCompare(String S, String T) {
+        int i = S.length() - 1;
+        int j = T.length() - 1;
+        int countS = 0;
+        int countT = 0;
 
-        for (int i = 0; i < sb.length(); i++) {
-            if (sb.charAt(i) == '#') {
-                    sb.deleteCharAt(i);
-                    i--;
-                if (i >= 0) {
-                    sb.deleteCharAt(i);
-                    i--;
-                }
-            }
-        }
-
-        for (int i = 0; i < tb.length(); i++) {
-            if (tb.charAt(i) == '#') {
-                tb.deleteCharAt(i);
+        while (i >= 0 || j >= 0) {
+            while (i >= 0 && (countS > 0 || S.charAt(i) == '#')) {
+                if (S.charAt(i) == '#') countS++;
+                else countS--;
                 i--;
-                if (i >= 0) {
-                    tb.deleteCharAt(i);
-                    i--;
-                }
             }
+        char leftCh = i < 0 ? '#' : S.charAt(i);
+
+        while (j >= 0 && (countT > 0 || T.charAt(j) == '#')) {
+            if (S.charAt(j) == '#') countS++;
+            else countS--;
+            j--;
         }
-        if (tb.length() != sb.length()) return false;
-        else {
-            for (int i = 0; i < sb.length(); i++) {
-                if (sb.charAt(i) != tb.charAt(i)) return false;
-            }
-        }
+        char rightCh = j < 0 ? '#' : S.charAt(j);
+
+        if (leftCh != rightCh) return false;
+
+        i--;
+        j--;
+    }
         return true;
     }
 }
