@@ -16,8 +16,6 @@ public class SubArrayProductLessThanK {
             }
             countRes += i - j + 1;
         }
-
-
         return countRes;
     }
 }
