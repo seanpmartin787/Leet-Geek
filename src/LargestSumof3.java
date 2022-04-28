@@ -14,7 +14,6 @@ public class LargestSumof3 {
                  sum -= s[i - 2];
                  sizeW--;
              }
-
         }
         return maxSum;
     }
