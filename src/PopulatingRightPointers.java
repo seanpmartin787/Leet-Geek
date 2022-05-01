@@ -20,42 +20,29 @@ class Node {
         next = _next;
     }
 };
-
         public Node connect(Node root) {
-            setNext(root);
-            return root;
-        }
+            Node realRoot = root; //so we can return the real root
+            Node frontOfCurrentLayer = new Node(0, null, null, root);
+            Node curr = frontOfCurrentLayer;
 
-        public static void setNext (Node curr) {
-            if (curr == null) return;
-
-            if (curr.left != null && curr.right != null) {
-                curr.left.next = curr.right;
-                setNext(curr.left);
-            } else if (curr.left != null && curr.right == null) {
-                curr.left.next = getNext(curr.next);
-                setNext(curr.left);
-            }
-
-            if (curr.right != null) {
-                curr.right.next = getNext(curr.next);
-                setNext(curr.right);
-            }
-        }
-
-        public static Node getNext (Node curr) {
-            Node next = null;
-            while (curr != null && next == null) {
-
-                if (curr.left != null) {
-                    next = curr.left;
-                } else if (curr.right != null) {
-                    next = curr.right;
-                } else {
+            while (root != null) {
+                if (root.left != null) {
+                    curr.next = root.left;
                     curr = curr.next;
                 }
-            }
-            return next;
-        }
+                if (root.right != null) {
+                    curr.next = root.right;
+                    curr = curr.next;
+                }
+                root = root.next;
 
+                if (root == null) {
+                    curr = frontOfCurrentLayer;
+                    root = frontOfCurrentLayer.next;
+                    frontOfCurrentLayer.next = null;
+
+                }
+            }
+            return realRoot;
+        }
 }
