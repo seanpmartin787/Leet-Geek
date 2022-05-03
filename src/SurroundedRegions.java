@@ -18,8 +18,8 @@ public class SurroundedRegions {
         }
         //now we check the internal squares for any unvisited O's which would therefore be surrounded
         for (int n = 1; n < board[0].length-1; n++) {
-            if (board[0][n] == 'O') floodFill(visited, board, n, 0, 'X');
-            if (board[board.length - 1][n] == 'O') floodFill(visited, board, n, board.length-1, 'X');
+            if (board[0][n] == 'O') floodFill(visited, board, 0, n, 'O');
+            if (board[board.length - 1][n] == 'O') floodFill(visited, board,board.length-1, n, 'O');
         }
 
         for (int m = 1; m < board.length -1; m++) {
