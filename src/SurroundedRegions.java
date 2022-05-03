@@ -28,7 +28,7 @@ public class SurroundedRegions {
                     board[m][n] = 'O';
                 }
             }
-            }
+        }
     }
     public static void floodFill(int[][] visited, char[][] board, int x, int y, char color) {
         if (x >= 0 && x < board.length && y >= 0 && y < board[0].length

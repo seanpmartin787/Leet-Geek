@@ -1,8 +1,8 @@
 public class SurroundedRegionsUF {
     public static void main(String[] args) {
-        //char[][] board = new char[][] {{'X','X','X','X'},{'X','O','O','X'},{'X','X','O','X'},{'X','O','X','X'}};
+        char[][] board = new char[][] {{'X','X','X','X'},{'X','O','O','X'},{'X','X','O','X'},{'X','O','X','X'}};
         //char[][] board = new char[][] {{'O'}};
-        char[][] board = new char[][] {{'X','O','X'},{'X','O','X'},{'X','O','X'}};
+        //char[][] board = new char[][] {{'X','O','X'},{'X','O','X'},{'X','O','X'}};
         SurroundedRegionsUF test = new SurroundedRegionsUF();
         test.solve(board);
         System.out.println("all solved!");
@@ -19,15 +19,27 @@ public class SurroundedRegionsUF {
 
         for (int i = 0; i < x; i++) {
             for (int j = 0; j < y; j++) {
-                if ((i == 0 || i == x-1 || y == 0 || y == j-1) && board[x][y] == 'O') {
-                    uf.union(i * x + j, x * y); //join to dummy
-                }
-                //add all adjacent 'O's too
-                for (int[] d: dir) {
-                    if (x + d[0] >= 0 && x + d[0] < board.length && y + d[1] >= 0 && y + d[1] < board[0].length
-                            && board[x][y] == 'O')
+                if (board[i][j] == 'O') {
+                    if (i == 0 || i == x - 1 || j == 0 || j == y - 1) {
+                        uf.union(i * y + j, x * y); //join to dummy
+                    }
+                    //add all adjacent 'O's too
+                    for (int[] d: dir) {
+                        if (i + d[0] >= 0 && i + d[0] < x && j + d[1] >= 0 && j + d[1] < y && board[i + d[0]][j + d[1]] == 'O') {
+                            uf.union(y * (d[0] + i) + j, y * i + j);
+                        }
+                    }
                 }
 
+
+            }
+        }
+        //Now go through and flip all unconnected O's
+        for (int i = 1; i < board.length -1; i++) {
+            for (int j = 1; j < board[0].length -1; j++) {
+                if (board[i][j] == 'O' && !uf.isConnected(i * y + j, x * y)) {
+                    board[i][j] = 'X';
+                }
             }
         }
 
@@ -66,13 +78,12 @@ public class SurroundedRegionsUF {
         }
 
         public int find (int a) {
-            int root = a;
-            if (a != parent[a]) {
+            int root = parent[a];
+            if (parent[root] != root) {
                 //if not the parent, recurse
                 root = find(parent[a]);
                 //this path compression actually gets them to point to the top, not just grandparent
             }
-
             return root;
         }
 
