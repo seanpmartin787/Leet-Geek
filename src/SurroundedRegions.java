@@ -1,19 +1,23 @@
 public class SurroundedRegions {
     public static void main(String[] args) {
-
+        //char[][] board = new char[][] {{'X','X','X','X'},{'X','O','O','X'},{'X','X','O','X'},{'X','O','X','X'}};
+        //char[][] board = new char[][] {{'O'}};
+        char[][] board = new char[][] {{'X','O','X'},{'X','O','X'},{'X','O','X'}};
+        solve(board);
+        System.out.println("all solved!");
     }
-    public void solve(char[][] board) {
+    public static void solve(char[][] board) {
         //This feels like flood fill, but only island size is greater than 1
         //Solve with DFS
         //check boundaries first, then if any are unvisited in the middle, flood fill
-        int[][] visited = new int[board.length-1][board[0].length-1];
+        int[][] visited = new int[board.length][board[0].length];
         //check boundaries first
         for (int m = 0; m < board.length; m++) {
             if (board[m][0] == 'O') floodFill(visited, board, m, 0, 'O');
             if (board[m][board[0].length-1] == 'O') floodFill(visited, board, m, board[0].length-1, 'O');
         }
         //now we check the internal squares for any unvisited O's which would therefore be surrounded
-        for (int n = 1; n < board[0].length-2; n++) {
+        for (int n = 1; n < board[0].length-1; n++) {
             if (board[0][n] == 'O') floodFill(visited, board, n, 0, 'X');
             if (board[board.length - 1][n] == 'O') floodFill(visited, board, n, board.length-1, 'X');
         }
