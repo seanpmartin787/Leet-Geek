@@ -25,7 +25,7 @@ public class SurroundedRegions {
         for (int m = 1; m < board.length -1; m++) {
             for (int n = 1; n < board[0].length -1; n++) {
                 if (board[m][n] == 'O' && visited[m][n] == 0 ) {
-                    floodFill(visited,board,m,n, 'X');
+                    board[m][n] = 'O';
                 }
             }
             }
