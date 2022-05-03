@@ -25,8 +25,10 @@ public class SurroundedRegionsUF {
                     }
                     //add all adjacent 'O's too
                     for (int[] d: dir) {
-                        if (i + d[0] >= 0 && i + d[0] < x && j + d[1] >= 0 && j + d[1] < y && board[i + d[0]][j + d[1]] == 'O') {
-                            uf.union(y * (d[0] + i) + j, y * i + j);
+                        int newRow = i + d[0];
+                        int newCol = j + d[1];
+                        if (newRow >= 0 && newRow < x && newCol >= 0 && newCol < y && board[newRow][newCol] == 'O') {
+                            uf.union(y * newRow + newCol, y * i + j);
                         }
                     }
                 }
@@ -90,8 +92,6 @@ public class SurroundedRegionsUF {
         public boolean isConnected (int a, int b) {
             return find(a) == find(b);
         }
-
-
     }
 
 
