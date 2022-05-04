@@ -11,26 +11,20 @@ public class Subsets {
     }
     public static List<List<Integer>> subsets(int[] nums) {
         List<List<Integer>> subSets = new ArrayList<>();
-        subSets.add(null);
 
-        getSubSets(nums,0, subSets, new ArrayList<>(), new HashSet<>());
+        getSubSets(nums,0, subSets, new ArrayList<>());
 
         return subSets;
     }
 
-    public static void getSubSets (int[]nums, int start, List<List<Integer>> subSets, ArrayList<Integer> set, HashSet<Integer> alreadyAdded) {
+    public static void getSubSets (int[]nums, int start, List<List<Integer>> subSets, ArrayList<Integer> set) {
+        subSets.add(new ArrayList<>(set));
         for (int i = start; i < nums.length; i++) {
             int num = nums[i];
-            if (alreadyAdded.contains(num)) continue;
             set.add(num);
-            alreadyAdded.add(num);
-            subSets.add(new ArrayList<>(set));
 
-            if (set.size() != nums.length) getSubSets(nums, start + 1, subSets, set, alreadyAdded);
-
-            alreadyAdded.remove(set.get(set.size() - 1));
+            getSubSets(nums, i + 1, subSets, set);
             set.remove(set.size() - 1);
         }
-
     }
 }
