@@ -34,6 +34,8 @@ public class PermutationsDupes {
         for (int i = 0; i < nums.length; i++) {
 
             if (visited[i] == 1 || (i > 0 && nums[i-1] == nums[i] && visited[i-1] == 0)) continue;
+            //we can only add successive duplicates so the one before has to be visited
+            //that way we won't get different combinations of the same numbers
 
             path.add(nums[i]);
             visited[i] = 1;
