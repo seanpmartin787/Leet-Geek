@@ -4,9 +4,11 @@ import java.util.List;
 
 public class CombinationSumUnique {
     public static void main(String[] args) {
-
+        System.out.println(combinationSum2(new int[] {10,1,2,7,6,1,5}, 8));
+        //[10,1,2,7,6,1,5]
+        //8
     }
-    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+    public static List<List<Integer>> combinationSum2(int[] candidates, int target) {
         List<List<Integer>> res = new ArrayList<>();
         Arrays.sort(candidates);
         backTrack(candidates, target,0,  new ArrayList<>(), res);
@@ -23,7 +25,7 @@ public class CombinationSumUnique {
         for (int i = start; i < nums.length; i++) {
             if(i > start && nums[i] == nums[i-1]) continue; // skip duplicates
             set.add(nums[i]);
-            backTrack(nums, remaining - nums[i], i, set, res);
+            backTrack(nums, remaining - nums[i], i + 1, set, res);
             set.remove(set.size()-1);
         }
     }
