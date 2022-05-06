@@ -10,29 +10,26 @@ public class GenerateParentheses {
         //Maybe brute force it and verify test if each of the end results are valid?
         char[] state = new char[n*2]; //x2 because each n is 2 chars
         List<String> solvedStates = new ArrayList<>();
-        solveStates(solvedStates, state, new char[] {'('}, 0);
+        solveStates(solvedStates, state, new char[] {'('}, 0, 0);
 
         return solvedStates;
     }
 
-    private static void solveStates (List<String> solvedStates, char[] state, char[] candidates, int start) {
+    private static void solveStates (List<String> solvedStates, char[] state, char[] candidates, int start, int balance) {
+        //early exit opportunity if too many rights or lefts
+        if (balance < 0 || balance > state.length/2) return;
+
+        //if we are in a desired state
         if (start == state.length) {
-            if (isValidState(state)) solvedStates.add(new String(state));
+            if (balance == 0) solvedStates.add(new String(state));
             return;
         }
-
+        int weight = 0;
         for (char candidate: candidates) {
             state[start] = candidate;
-            solveStates(solvedStates, state, new char[] {'(',')'}, start + 1);
+            if (candidate == '(') weight = 1;
+            else weight = -1;
+            solveStates(solvedStates, state, new char[] {'(',')'}, start + 1, balance + weight);
         }
-    }
-
-    private static boolean isValidState (char[] state) {
-        int balance = 0;
-        for (int i = 0; i < state.length; i++) {
-            balance += (state[i] == '(') ? 1 : -1 ;
-            if (balance < 0) return false;
-        }
-        return (balance == 0);
     }
 }
