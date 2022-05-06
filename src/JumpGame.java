@@ -1,14 +1,17 @@
 public class JumpGame {
     public boolean canJump(int[] nums) {
-        return solveJump(nums, 0);
+        //let's try to add memoization to find dead ends
+
+        return solveJump(nums, new int[nums.length],0);
     }
 
-    public static boolean solveJump (int[] nums, int index) {
-        if (index >= nums.length) return false; //is this a valid state?
+    public static boolean solveJump (int[] nums, int[] memo, int index) {
+        if (index >= nums.length || memo[index] == -1) return false; //is this a valid state or a bad path?
         if (index == nums.length - 1) return true; //is this a solved state?
 
         for (int i = nums[index]; i > 0; i--) {
-            if (solveJump(nums,index + i)) return true;
+            if (solveJump(nums, memo,index + i)) return true;
+            memo[index] = -1;
         }
         return false;
     }
