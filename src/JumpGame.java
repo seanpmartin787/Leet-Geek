@@ -1,6 +1,6 @@
 public class JumpGame {
     public boolean canJump(int[] nums) {
-        //let's try to add memoization to find dead ends
+        //okay memo saved the day, but what about a bottom up approach?
 
         return solveJump(nums, new int[nums.length],0);
     }
