@@ -9,49 +9,31 @@ public class LongestPalindrome {
 
     }
     public static String longestPalindrome(String s) {
-        //this feels like sliding window
-        //I should be always asking, can I do better than this?
-        //A palindrome requires the letter mirrored across the middle to be the same
-        // even number of items (Ex. (a,a), (a,b,b,a) etc.
-        // and odd number of items (Ex. (a,b,a), (a,b,c,b,a) etc.
-        // edge cases:
-        // -empty string
-        // - no palindrome (or longest palindrome == 1 ex. (a,b,c,d,e))
-        // - s.length == palindrome (ex. (a,a,a,a,a,a,a))
-
-        //let's do a bfs of any palindrome we find by seeing if start - 1 == end + 1
+        //looks like we basically did two DFSs at each index of the string
 
         int palindromeStart = 0, palindromeEnd = 0, maxPalindrome = 0;
+        String longestPalindrome = "", substring = "";
 
-        for (int i = 0, j; i < s.length(); i++) {
-            int start = j = i;
-            //this works for odd palindromes
-            while (i >= 0 && j < s.length() && s.charAt(i) == s.charAt(j)) {
-                if(maxPalindrome < j- i + 1) {
-                    maxPalindrome = j-i+1;
-                    palindromeStart = i;
-                    palindromeEnd = j;
-                    if (maxPalindrome == s.length()) break;
-                }
-                i--;
+        for (int i = 0,j = i; i < s.length(); i++) {
+            //look for odd palindromes
+            while (j < s.length() && s.charAt(j) == s.charAt(i)) {
                 j++;
             }
-            i = start;
-            j = start+1;
-            //this works for even palindromes
-            while (i >= 0 && j < s.length() && s.charAt(i) == s.charAt(j)) {
-                if(maxPalindrome < j- i + 1) {
-                    maxPalindrome = j-i+1;
-                    palindromeStart = i;
-                    palindromeEnd = j;
-                    if (maxPalindrome == s.length()) break;
-                }
-                i--;
-                j++;
-            }
-            i = start;
+            substring = getLongestPalindrome(s, i - 1, j);
+            longestPalindrome = substring.length() > longestPalindrome.length() ? substring : longestPalindrome;
+            if (longestPalindrome.length() == s.length()) break;
         }
+        return longestPalindrome;
+    }
 
-        return s.substring(palindromeStart,palindromeEnd + 1);
+    private static String getLongestPalindrome (String s, int i, int j) {
+        int palindromeStart = i, palindromeEnd = j;
+        while (i >= 0 && j < s.length() && s.charAt(i) == s.charAt(j)) {
+            palindromeStart = i;
+            palindromeEnd = j;
+            i--;
+            j++;
+        }
+        return s.substring(palindromeStart, palindromeEnd+1);
     }
 }
