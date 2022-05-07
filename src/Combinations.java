@@ -3,9 +3,9 @@ import java.util.List;
 
 public class Combinations {
     public static void main(String[] args) {
-        combine(2,4);
-        combine(4,2);
-        combine(7,3);
+        System.out.println(combine(2,4));
+        System.out.println(combine(4,2));
+        System.out.println(combine(7,3));
     }
     public static List<List<Integer>> combine(int n, int k) {
         List<List<Integer>> combs = new ArrayList<>();
