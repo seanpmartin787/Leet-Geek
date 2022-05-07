@@ -10,7 +10,7 @@ public class ArithmeticSlices {
     // and the difference between any two consecutive elements is the same
     //For example, [1,3,5,7,9], [7,7,7,7], and [3,-1,-5,-9] are arithmetic sequences.
     public static int numberOfArithmeticSlices(int[] nums) {
-        //basically this is the number of subsets of size >= 3
+        //basically this is the number of contiguous subsets of size >= 3
         if (nums.length < 3) return 0; //need 3 elements for an arithmetic slice
         return solveSlices(nums, 0, new ArrayList<>());
     }
