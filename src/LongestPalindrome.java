@@ -14,16 +14,19 @@ public class LongestPalindrome {
         int palindromeStart = 0, palindromeEnd = 0, maxPalindrome = 0;
         String longestPalindrome = "", substring = "";
 
-        for (int i = 0; i < s.length(); i++) {
+        for (int i = 0, j; i < s.length(); i++) {
+            int start = j = i;
             //look for odd palindromes
-            substring = getLongestPalindrome(s, i, i);
-            longestPalindrome = substring.length() > longestPalindrome.length() ? substring : longestPalindrome;
-            if (longestPalindrome.length() == s.length()) break;
+            substring = getLongestPalindrome(s, i, j);
+            longestPalindrome = substring.length() > maxPalindrome ? substring : longestPalindrome;
+            maxPalindrome = longestPalindrome.length();
+            if (maxPalindrome == s.length()) break;
 
             //look for even palindromes
-            substring = getLongestPalindrome(s, i, i+1);
-            longestPalindrome = substring.length() > longestPalindrome.length() ? substring : longestPalindrome;
-            if (longestPalindrome.length() == s.length()) break;
+            substring = getLongestPalindrome(s, i, j+1);
+            longestPalindrome = substring.length() > maxPalindrome ? substring : longestPalindrome;
+            maxPalindrome = longestPalindrome.length();
+            if (maxPalindrome == s.length()) break;
 
 
         }
