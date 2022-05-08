@@ -11,6 +11,8 @@ public class NumDecoding {
         System.out.println("226 returns: " + numDecodings("226"));
         System.out.println("10 returns: " + numDecodings("10"));
         System.out.println("110 returns: " + numDecodings("110"));
+        System.out.println("101111111110 returns: " + numDecodings("101111111110"));
+
 
     }
         //given this string s, which will be a series of number digits, we need to decode it with this mapping:
