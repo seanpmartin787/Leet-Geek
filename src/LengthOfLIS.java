@@ -15,13 +15,13 @@ public class LengthOfLIS {
         int LIS = 0;
 
         for (int i = nums.length - 1; i >= 0; i--) {
-            getLIS(nums, memo, i, 1);
+            getLIS(nums, memo, i);
             LIS = Math.max(LIS, memo[i]);
 
         }
         return LIS;
     }
-    private static void getLIS(int[] nums, int[] memo, int start, int length) {
+    private static void getLIS(int[] nums, int[] memo, int start) {
         //if we have already solved this return the longest substring at the index
         if (memo[start] != 0) return;
 
@@ -31,7 +31,7 @@ public class LengthOfLIS {
         int current = nums[start];
         for (int i = start -1; i >= 0; i--) {
             if (nums[i] < current) {
-                getLIS(nums, memo, i, length + 1);
+                getLIS(nums, memo, i);
                 memo[start] = Math.max(memo[start], 1 + memo[i]);
             }
         }
