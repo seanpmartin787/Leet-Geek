@@ -1,8 +1,18 @@
 public class LengthOfLIS {
     public static void main(String[] args) {
+        long startTime = System.nanoTime();
         System.out.println(lengthOfLIS(new int [] {10,9,2,5,3,7,101,18}));
         System.out.println(lengthOfLIS(new int [] {0,1,0,3,2,3}));
         System.out.println(lengthOfLIS(new int [] {7,7,7,7,7,7,7}));
+        long endTime = System.nanoTime();
+        System.out.println("Time elapsed: " + (endTime - startTime));
+        System.out.println("-".repeat(50));
+        startTime = System.nanoTime();
+        System.out.println(lengthOfLISBinarySearch(new int [] {10,9,2,5,3,7,101,18}));
+        System.out.println(lengthOfLISBinarySearch(new int [] {0,1,0,3,2,3}));
+        System.out.println(lengthOfLISBinarySearch(new int [] {7,7,7,7,7,7,7}));
+        endTime = System.nanoTime();
+        System.out.println("Time elapsed: " + (endTime - startTime));
     }
     public static int lengthOfLIS(int[] nums) {
         //okay we watched a video on this
@@ -11,7 +21,7 @@ public class LengthOfLIS {
         //[10,9,2,5,3,7,101,18]
         //LIS: [2,3,7,101]
         //lets find the longest increasing sub string starting at index i and then take the max
-        //TODO: refactor with Binary Search
+
         int[] memo = new int[nums.length];
         int LIS = 0;
 
@@ -37,5 +47,27 @@ public class LengthOfLIS {
             }
         }
         if (memo[start] == 0) memo[start] = 1;
+    }
+
+    public static int lengthOfLISBinarySearch(int[] nums) {
+        int size = 0;
+        //Tails will have the smallest head of increasing sub arrays of the size of that index + 1
+        int[] tails = new int[nums.length];
+
+        for (int x : nums) {
+            int l = 0, h = size;
+            while (l != h) {
+                int m = l + (h - l) / 2; //this prevents overflow
+                if (tails[m] < x) {
+                    l = m + 1;
+                } else {
+                    h = m; //not m - 1 because we haven't checked m, so we want to include it in the search
+                }
+            }
+            tails[l] = x;
+            if (size == l) size++;
+        }
+
+        return size;
     }
 }
