@@ -11,6 +11,7 @@ public class LengthOfLIS {
         //[10,9,2,5,3,7,101,18]
         //LIS: [2,3,7,101]
         //lets find the longest increasing sub string starting at index i and then take the max
+        //TODO: refactor with Binary Search
         int[] memo = new int[nums.length];
         int LIS = 0;
 

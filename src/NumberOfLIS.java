@@ -4,7 +4,7 @@ public class NumberOfLIS {
     public static void main(String[] args) {
         System.out.println(findNumberOfLIS(new int [] {1,3,5,4,7}));
         System.out.println(findNumberOfLIS(new int [] {2,2,2,2,2}));
-        //System.out.println(findNumberOfLIS(new int [] {7,7,7,7,7,7,7}));
+        System.out.println(findNumberOfLIS(new int [] {1,2,4,3,5,4,7,2}));
     }
     public static int findNumberOfLIS(int[] nums) {
         int[] memo = new int[nums.length];
@@ -24,6 +24,9 @@ public class NumberOfLIS {
         //[10,9,2,5,3,7,101,18]
         //[1 ,1,1,2,2,3, 4 ,4]
         //get the max of any sub sets starting with any number that is smaller than current
+        //TODO: add a count and a length data structure arrays
+        //int[nums.length] cnt -- cnt of longest increasing substrings at i
+        //int[nums.length] len -- length of longest increasing substrings at i
         for (int i = start -1; i >= 0; i--) {
             if (nums[i] < nums[start]) {
                 getLIS(nums, memo, i, freq);
