@@ -2,46 +2,34 @@ import java.util.HashMap;
 
 public class NumberOfLIS {
     public static void main(String[] args) {
-        System.out.println(findNumberOfLIS(new int [] {1,3,5,4,7}));
-        System.out.println(findNumberOfLIS(new int [] {2,2,2,2,2}));
-        System.out.println(findNumberOfLIS(new int [] {1,2,4,3,5,4,7,2}));
+        System.out.println(findNumberOfLIS(new int[]{1, 3, 5, 4, 7}));
+        System.out.println(findNumberOfLIS(new int[]{2, 2, 2, 2, 2}));
+        System.out.println(findNumberOfLIS(new int[]{1, 2, 4, 3, 5, 4, 7, 2}));
     }
+
     public static int findNumberOfLIS(int[] nums) {
-        int[] memo = new int[nums.length];
-        int LIS = 0;
-        HashMap<Integer, Integer> freq = new HashMap();
-
-
-        for (int i = nums.length - 1; i >= 0; i--) {
-            getLIS(nums, memo, i, freq);
-            LIS = Math.max(LIS, memo[i]);
-        }
-        return freq.get(LIS);
-    }
-    private static void getLIS(int[] nums, int[] memo, int start, HashMap<Integer, Integer> freq) {
-        //if we have already solved this return the longest substring at the index
-        if (memo[start] != 0) return;
-        //[10,9,2,5,3,7,101,18]
-        //[1 ,1,1,2,2,3, 4 ,4]
-        //get the max of any sub sets starting with any number that is smaller than current
-        //TODO: add a count and a length data structure arrays
-        //int[nums.length] cnt -- cnt of longest increasing substrings at i
-        //int[nums.length] len -- length of longest increasing substrings at i
-        for (int i = start -1; i >= 0; i--) {
-            if (nums[i] < nums[start]) {
-                getLIS(nums, memo, i, freq);
-                int currentLongest = memo[i] + 1;
-                memo[start] = Math.max(memo[start], currentLongest);
-                if (freq.containsKey(currentLongest)) {
-                    freq.replace(currentLongest,freq.get(currentLongest) + 1);
-                } else freq.put(currentLongest,1);
+        int n = nums.length, res = 0, max_len = 0;
+        int[] len = new int[n], cnt = new int[n];
+        //recursion requires top down, iteration can be bottom up
+        //both are similar speeds, although iteration tends to be quicker
+        //and use less memory because there is no need to keep track of a recusive stack
+        for (int i = 0; i < n; i++) {
+            len[i] = cnt[i] = 1;
+            for (int j = 0; j < i; j++) {
+                if (nums[j] < nums[i]) {
+                    if (len[j] + 1 == len[i]) cnt[i] += cnt[j];
+                    else if (len[i] < len[j] + 1) {
+                        len[i] = len[j] + 1;
+                        cnt[i] = cnt[j];
+                    }
+                }
+            }
+            if (max_len == len[i]) res += cnt[i];
+            if (max_len < len[i]) {
+                max_len = len[i];
+                res = cnt[i];
             }
         }
-        if (memo[start] == 0) {
-            memo[start] = 1;
-            if (freq.containsKey(1)) {
-                freq.replace(1,freq.get(1) + 1);
-            } else freq.put(1,1);
-        }
+        return res;
     }
 }
