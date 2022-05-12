@@ -15,6 +15,8 @@ public class DeleteStrings {
         //every time they have a new matching character we increment overlap
         //numOfDeletes would be (word1 - overlap) + (word2 - overlap)
         int totalOverlap = 0, length1 = word1.length(), length2 = word2.length();
+        //This is just like longest common subsequence, just asking a different question
+        //every time we find a match we increment our longest substring
         int[][] overlap = new int[word1.length()+1][word2.length()+1];
 
         for (int i=1; i <= length1; i++) {
@@ -32,8 +34,6 @@ public class DeleteStrings {
                 }
             }
         }
-
         return (length1 - totalOverlap) + (length2 - totalOverlap);
-
     }
 }
