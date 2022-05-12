@@ -1,5 +1,14 @@
 public class DeleteStrings {
-    public int minDistance(String word1, String word2) {
+    public static void main(String[] args) {
+//        System.out.println(minDistance(null,null));
+//        System.out.println(minDistance("",""));
+//        System.out.println(minDistance("","sdf"));
+        System.out.println(minDistance("sea","eat"));
+        System.out.println(minDistance("seats","eat"));
+        System.out.println(minDistance("leetcode","etco"));
+        System.out.println(minDistance("park","spake"));
+    }
+    public static int minDistance(String word1, String word2) {
         //edge cases
         if (word1 == null || word2 == null || word1.isEmpty() || word2.isEmpty()) return 0;
 
@@ -12,10 +21,14 @@ public class DeleteStrings {
             for (int j=1; j <= length2; j++) {
                 if (word1.charAt(i-1) == word2.charAt(j-1)) {
                     overlap[i][j] = overlap[i-1][j-1] + 1;
-                    totalOverlap = Math.max(totalOverlap,overlap[i][j]);
+                } else {
+                    overlap[i][j] = Math.max(overlap[i-1][j], overlap[i][j-1]);
+                }
 
-                    //early exit if one completely overlaps
-                    if (totalOverlap == length1 || totalOverlap == length2) break;
+                totalOverlap = Math.max(totalOverlap,overlap[i][j]);
+                //early exit if one completely overlaps
+                if (totalOverlap == length1 || totalOverlap == length2) {
+                    return (length1 - totalOverlap) + (length2 - totalOverlap);
                 }
             }
         }
