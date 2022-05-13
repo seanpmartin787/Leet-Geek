@@ -20,17 +20,16 @@ public class CoinChange {
         getSums(coins,memo,amount);
         return memo[amount];
     }
-    private static int getSums (int[] coins, int[] memo, int amount) {
-        if (amount < 0) return Integer.MAX_VALUE - (memo.length); //return arbitrarily large number so it doesn't get picked
-        if (amount == 0) return 0; //we found a match, aka no need for more coins
-        if (memo[amount] != 0) return memo[amount];
-
+    private static void getSums (int[] coins, int[] memo, int amount) {
         //we have a few options, we can take the same coin, or any of the others
         PriorityQueue<Integer> minHeap = new PriorityQueue<>();
         for (int x: coins) {
-            minHeap.add(getSums(coins,memo,amount-x) + 1);
+            if (amount - x >= 0) {
+                getSums(coins, memo, amount - x);
+                minHeap.add(memo[amount - x] + 1); //whatever the next amount of coins is plus the current coin
+            }
         }
-        memo[amount] = minHeap.poll();
-        return memo[amount];
+        if (!minHeap.isEmpty())
+            memo[amount] = minHeap.poll();
     }
 }
