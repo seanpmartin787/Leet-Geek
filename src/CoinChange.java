@@ -7,6 +7,8 @@ public class CoinChange {
     public static void main(String[] args) {
         System.out.println(coinChange(new int[] {5,2,1},11));
         System.out.println(coinChange(new int[] {1},0));
+        System.out.println(coinChange(new int[] {1,2,5},100));
+        System.out.println(coinChange(new int[] {2},3));
     }
     public static int coinChange(int[] coins, int amount) {
         //because this is asking for the fewest number of moves,
@@ -21,6 +23,7 @@ public class CoinChange {
         return memo[amount];
     }
     private static void getSums (int[] coins, int[] memo, int amount) {
+        if (memo[amount] != 0) return;
         //we have a few options, we can take the same coin, or any of the others
         PriorityQueue<Integer> minHeap = new PriorityQueue<>();
         for (int x: coins) {
