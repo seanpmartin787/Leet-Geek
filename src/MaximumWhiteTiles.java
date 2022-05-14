@@ -1,26 +1,51 @@
+import java.util.Arrays;
+
 public class MaximumWhiteTiles {
     public static void main(String[] args) {
         System.out.println(maximumWhiteTiles(new int[][] {{1,5},{10,11},{12,18},{20,25},{30,32}}, 10));
         System.out.println(maximumWhiteTiles(new int[][] {{10,11},{1,1}}, 2));
     }
     public static int maximumWhiteTiles(int[][] tiles, int carpetLen) {
-        //we could brute force this by stretching the carpet over every entry of every array
-        //but, really I think we just want to find the largest (non-contiguous) subset of length, carpetLen that touches the most white tiles
-        //int[][] memo = new int[tiles.length][tiles[0].length];
-        int maxTiles = 0, currentTiles= 0, nextEnd = 0;
+        int n = tiles.length;
+        long[] totalTiles = new long[n];
+        int ans = 0;
 
-        for (int i=0,j=0; i < tiles.length; i++,j=i) {
-            nextEnd = tiles[j][0] + carpetLen;
-            currentTiles = 0;
-            while (j < tiles.length && tiles[j][1] < nextEnd) {
-                currentTiles += tiles[j][1] - tiles[j][0] + 1; //add the tiles in this group
-                j++; //find the next end point
-            }
-            if (j < tiles.length && j > i) {
-                currentTiles += Math.max(nextEnd - tiles[j][0], 0); //tiles in this group up until the end one
-            }
-            maxTiles = Math.max(currentTiles,maxTiles);
+        Arrays.sort( tiles, (t1, t2) -> t1[0] - t2[0] ); //comparator saying we should sort
+
+        // Prefix sum : which stores the count of white tiles from 0th index to ith index.
+        for( int i = 0; i < n; i++ )
+        {
+            totalTiles[i] = ( i > 0 ? totalTiles[i-1] : 0 ) + tiles[i][1] - tiles[i][0] + 1;
         }
-        return maxTiles;
+        for( int i = 0; i < n; i++ )
+        {
+            int nextPoint = tiles[i][0] + carpetLen - 1;  // carpet ends at
+            int index = binarySearch( tiles, i, n-1, nextPoint );  // valid index in sorted tiles, where 'nextpoint' lies.
+
+            int temp = (int) totalTiles[index] - ( i > 0 ? (int) totalTiles[i-1] : 0 );
+
+            if( nextPoint < tiles[index][1] )
+                temp -= ( tiles[index][1] - nextPoint );
+            ans = Math.max( ans, temp );
+        }
+
+        return ans;
+    }
+    private static int binarySearch (int[][] tiles, int left, int right, int value) {
+        int index = -1;
+
+        while (left <= right) {
+            int mid = left + (right - left)/2;
+
+            if (value >= tiles[mid][0] && value <= tiles[mid][1]) return mid;
+            else if (value < tiles[mid][0]) {
+                right = mid - 1;
+            } else {
+                index = mid;
+                left = mid + 1;
+            }
+
+        }
+        return index;
     }
 }
