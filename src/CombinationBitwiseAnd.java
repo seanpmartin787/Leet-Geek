@@ -1,16 +1,21 @@
 public class CombinationBitwiseAnd {
-    public int largestCombination(int[] candidates) {
-        int[] largest = new int[1];
-        getCombinations(candidates, largest, candidates[0],0, candidates.length);
-        return largest[0];
+    public static void main(String[] args) {
+        System.out.println(largestCombination(new int[] {16,16,48,71,62,12,24,14,17,18,19,20,10000}));
+//        int[] test = new int[] {16,16,48,71,62,12,24,14,17,18,19,20,10000};
+//        int current = test[4];
+//        for (int i = 4; i < test.length; i++) {
+//            current &= test[i];
+//            System.out.println(current);
+//        }
     }
-    private static void getCombinations (int[] cand, int[] largest, int current, int start, int k) {
-        if (start == cand.length) {
-            largest[0] = Math.max(largest[0], current);
-        }
-        for (int i = start; i < cand.length-k+1; i++) {
-            current = current & cand[i];
-            getCombinations(cand,largest,current,start+1,k-1);
+    public static int largestCombination(int[] A) {
+            int max=0;
+            for(int i=31;i>=0;i--){
+                int cnt=0;
+                for(int j:A) if(((j>>i)&1)==1) cnt++;
+                max= Math.max(max,cnt);
+            }
+            return max;
         }
     }
 }
