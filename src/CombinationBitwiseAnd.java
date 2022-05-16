@@ -9,13 +9,12 @@ public class CombinationBitwiseAnd {
 //        }
     }
     public static int largestCombination(int[] A) {
-            int max=0;
-            for(int i=31;i>=0;i--){
-                int cnt=0;
-                for(int j:A) if(((j>>i)&1)==1) cnt++;
-                max= Math.max(max,cnt);
-            }
-            return max;
+        int max=0;
+        for(int i=31;i>=0;i--){
+            int cnt=0;
+            for(int j:A) if(((j>>i)&1)==1) cnt++;
+            max= Math.max(max,cnt);
         }
+        return max;
     }
 }
