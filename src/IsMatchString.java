@@ -1,6 +1,5 @@
 public class IsMatchString {
     public static void main(String[] args) {
-//        System.out.println(isMatch(null,"a"));
 //        System.out.println(isMatch("",""));
 //        System.out.println(isMatch("","a"));
 //        System.out.println(isMatch("","*"));
@@ -11,44 +10,64 @@ public class IsMatchString {
 //        System.out.println(isMatch("cb","*****"));
 //        System.out.println(isMatch("csdfssfsdffdb","c*b"));
 //        System.out.println(isMatch("csdfssfsdffdbbbb","c*b*"));
-        System.out.println(isMatch("abcabczzzde","*abc???de*"));
+        System.out.println(comparison("abcabczzzde","*abc???de*"));
         //"abcabczzzde"
         //"*abc???de*"
     }
     public static boolean isMatch(String s, String p) {
-        //so we want to search through s to see if it matches p
-        // * is an anything wildcard (including an empty sequence)
-        // ? is a single character replacement
-        // Edge cases:
-        //s or p is null
-        //s and p is empty
-        //s is empty (the only valid p would be *)
-        //p is empty (is this a match or no?)
-        //else we search through s + p
-        if (s == null || p == null) return false;
-        if (s.isEmpty() && p.isEmpty()) return true;
-        if (s.isEmpty()) return p.charAt(0) == '*';
-        if (p.isEmpty()) return false;
+        int m=s.length(), n=p.length();
+        boolean[][] dp = new boolean[m+1][n+1];
+        dp[0][0] = true;
 
-        int i=0, j=0;
-        while (i < p.length() && j < s.length()) {
-            char charP = p.charAt(i); //a
-            char charI = s.charAt(j);
-            if (charP == charI || charP == '?') {
-                j++;
-                i++;
+        for(int j=1; j<=n; j++) {
+            if(p.charAt(j-1)=='*'){
+                dp[0][j] = true;
+            } else {
+                break;
             }
-            else if (charP == '*') {
-                while (i < p.length() && p.charAt(i) == '*') i++;
-                if (i == p.length()) return true; //if we have nothing but * left it has to be true
-                else {
-                    charP = p.charAt(i);
-                    while (j < s.length() && s.charAt(j) != charP) j++;
-                    if (j == s.length()) return false; //If we never match the next p character this pattern won't match
-                }
-            } else return false;
-            if (i == p.length() && j == s.length()) return true;
         }
-        return false; //if we never finished the pattern, return false
+
+        for(int i=1; i<=m; i++) {
+            for(int j=1; j<=n; j++) {
+                if (p.charAt(j-1)!='*') {
+                    dp[i][j] = dp[i-1][j-1] && (s.charAt(i-1)==p.charAt(j-1) || p.charAt(j-1)=='?');
+                } else {
+                    dp[i][j] = dp[i-1][j] || dp[i][j-1];
+                }
+            }
+        }
+        return dp[m][n];
+    }
+
+    public static boolean comparison(String str, String pattern) {
+        int s = 0, p = 0, match = 0, starIdx = -1;
+        while (s < str.length()){
+            // advancing both pointers
+            if (p < pattern.length()  && (pattern.charAt(p) == '?' || str.charAt(s) == pattern.charAt(p))){
+                s++;
+                p++;
+            }
+            // * found, only advancing pattern pointer
+            else if (p < pattern.length() && pattern.charAt(p) == '*'){
+                starIdx = p;
+                match = s;
+                p++;
+            }
+            // last pattern pointer was *, advancing string pointer
+            else if (starIdx != -1){
+                p = starIdx + 1;
+                match++;
+                s = match;
+            }
+            //current pattern pointer is not star, last patter pointer was not *
+            //characters do not match
+            else return false;
+        }
+
+        //check for remaining characters in pattern
+        while (p < pattern.length() && pattern.charAt(p) == '*')
+            p++;
+
+        return p == pattern.length();
     }
 }
