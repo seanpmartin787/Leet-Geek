@@ -1,10 +1,11 @@
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class CopyLLWithRandom {
 
 // Definition for a Node.
-class Node {
+private static class Node {
     int val;
     Node next;
     Node random;
@@ -16,8 +17,30 @@ class Node {
     }
 }
 
+    public static void main(String[] args) {
+        //[7,null],[13,0],[11,4],[10,2],[1,0]
+        Node zero = new Node(7);
+        Node one = new Node(13);
+        Node two = new Node(11);
+        Node three = new Node(10);
+        Node four = new Node(1);
 
-    public Node copyRandomList(Node head) {
+        zero.next = one;
+        one.next = two;
+        one.random = zero;
+        two.next = three;
+        two.random = four;
+        three.next = four;
+        three.random = two;
+        four.random = zero;
+
+        Node root = copyRandomList(zero);
+
+        System.out.println("all done");
+
+    }
+
+    public static Node copyRandomList(Node head) {
         //I know this one
         //We want to loop through the original list twice
         //The first time we will create a copy of each node, and a copy of the next
@@ -33,12 +56,15 @@ class Node {
         Map<Node,Integer> randomIndexMap = new HashMap();
         Node current = head, currentOther = null, newHead = null;
         int i = 0;
-
+        ////[7,null],[13,0],[11,4],[10,2],[1,0]
         while (current != null) {
             //This will allow random access lookup for random pointer assignment
             randomIndexMap.put(current, i++);
             current = current.next;
         }
+        //reset current and i
+        i=0;
+        current = head;
 
         //don't have to worry about null b/c of edge case checking
         //intitialize new list
@@ -46,9 +72,6 @@ class Node {
         currentOther = newHead;
         newListMap.put(i++,currentOther);
 
-        //reset current and i
-        i=0;
-        current = head;
         //copy list and cache indexes of otherList nodes
         while (current != null && current.next != null) {
             currentOther.next = new Node(current.next.val);
