@@ -1,6 +1,6 @@
 //public class SumOfStrengthWizards {
 //TODO:get better and figure this out
-
+//https://leetcode.com/problems/sum-of-total-strength-of-wizards/discuss/2061787/Amazon-Online-Assessment
 //    public static void main(String[] args) {
 //        System.out.println(totalStrength(new int[] {1,2,3}));
 //    }
