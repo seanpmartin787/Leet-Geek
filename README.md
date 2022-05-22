@@ -13,3 +13,7 @@ LeetCode Solutions
 - Matrices
 - DFS
 - BFS
+- Backtracking
+- Memoization
+- Union find
+- Dynamic programming
