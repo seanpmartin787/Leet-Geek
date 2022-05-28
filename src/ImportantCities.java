@@ -11,8 +11,8 @@ public class ImportantCities {
     public static long maximumImportance(int n, int[][] roads) {
         //We basically want to put the highest importance on the roads with the most connections
         //so we can use that number more times
-        Queue<Long> cityConnections = new PriorityQueue<>();
-        long[] numConnections = new long[n];
+        Queue<Integer> cityConnections = new PriorityQueue<>();
+        int[] numConnections = new int[n];
         long totalImportance = 0;
 
         //Find out how many times each city is connected
@@ -23,10 +23,10 @@ public class ImportantCities {
 
         //once we know how many connections each city has let's sort them with a PQ
         //because of underlying heap we can use this to sort n values in O(nlog(n)) time
-        for (long num: numConnections) cityConnections.offer(num);
+        for (int num: numConnections) cityConnections.offer(num);
 
         //n operations
-        for (int i = 1; i <= n; i++) totalImportance += i * cityConnections.poll();
+        for (long i = 1; i <= n; i++) totalImportance += i * cityConnections.poll();
 
         return totalImportance;
         //space complexity = O(2n) = O(n) (we have two (constant) additional data structures of maximum size n)
