@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
@@ -8,6 +9,28 @@ public class Permutations {
         System.out.println(isPermutation("abca","cba"));
         System.out.println(isPermutation("abc","cba"));
         System.out.println(isPermutation("abc","zzz"));
+    }
+    public static boolean isPalindromePerm (String str) {
+
+        HashMap<Character,Integer> freq = new HashMap<>();
+        int numOdds = 0;
+
+        for (char ch: str.toCharArray()) {
+            if (ch == ' ') continue;
+            if (!freq.containsKey(ch)) {
+                freq.put(ch,1);
+                numOdds++; //every new char is an odd
+            }
+            else {
+                int newNum = freq.get(ch) + 1;
+                numOdds += newNum % 2 == 1 ? 1 : -1;
+                freq.replace(ch, newNum);
+            }
+        }
+
+        if (numOdds > 1) return false;
+
+        return true;
     }
 
     public static boolean isPermutation(String m, String n) {
