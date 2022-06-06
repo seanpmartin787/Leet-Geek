@@ -3,13 +3,16 @@ import java.util.HashMap;
 import java.util.List;
 
 class FizzBuzz {
-    public List<String> fizzBuzz(int n) {
+
+    public static void main(String[] args) {
+        System.out.println(fizzBuzz(15));
+    }
+    public static List<String> fizzBuzz(int n) {
 
         List<String> wordList = new ArrayList<>();
 
         //define default initialization for a new HashMap
-        HashMap<Integer, String> codeDict =
-                new HashMap<Integer, String>() {
+        HashMap<Integer, String> codeDict = new HashMap<Integer, String>() {
             {
                 put(3, "Fizz");
                 put(5, "Buzz");
