@@ -9,7 +9,8 @@ public class PermutationsDupes {
         // [1,2,1],
         // [2,1,1]]
 //        System.out.println(permuteUnique(new int[] {1,1,1}));
-        System.out.println(permuteUnique(new int[] {3,3,0,3}));
+        //System.out.println(permuteUnique(new int[] {3,3,0,3}));
+        System.out.println(permuteUnique(new int[] {1,2,2,2,4}));
 
 
     }
@@ -35,6 +36,7 @@ public class PermutationsDupes {
 
             if (visited[i] == 1 || (i > 0 && nums[i-1] == nums[i] && visited[i-1] == 0)) continue;
             //we can only add successive duplicates so the one before has to be visited
+            //basically for the two's, order does matter
             //that way we won't get different combinations of the same numbers
 
             path.add(nums[i]);
